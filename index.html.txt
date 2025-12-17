@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PVR NasheDi Cinema Review</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pvr-red: #e50914;
+            --gold: #ffcc00;
+            --dark-bg: #100f13;
+            --medium-dark: #1f1d24;
+            --light-grey: #a0a0a0;
+            --input-bg: rgba(255, 255, 255, 0.08);
+            --border-color: rgba(255, 255, 255, 0.15);
+            --hover-border: rgba(229, 9, 20, 0.5);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: var(--medium-dark);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border-color);
+            padding: 30px 40px;
+            width: 100%;
+            max-width: 550px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            animation: fadeInScale 0.7s ease-out forwards;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .logo {
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--light-grey);
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            color: var(--light-grey);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .text-input {
+            width: calc(100% - 24px);
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--input-bg);
+            color: white;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .text-input::placeholder {
+            color: #777;
+        }
+
+        .text-input:focus {
+            border-color: var(--pvr-red);
+            box-shadow: 0 0 8px rgba(229, 9, 20, 0.3);
+        }
+
+        .rating-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .rating-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .rating-header h3 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .clear-btn {
+            background: none;
+            border: 1px solid #777;
+            color: #777;
+            padding: 6px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .clear-btn:hover {
+            border-color: white;
+            color: white;
+        }
+
+        .star-rating-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .star-rating-group label {
+            display: block;
+            color: var(--light-grey);
+            margin-bottom: 10px;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .stars {
+            display: flex;
+            flex-direction: row-reverse; /* For CSS trick to fill stars */
+            justify-content: flex-start; /* Align to left */
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .stars input[type="radio"] {
+            display: none;
+        }
+
+        .stars label.star {
+            font-size: 35px;
+            color: #444;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.2s ease;
+            line-height: 1; /* Adjust line height to prevent extra space */
+        }
+
+        /* Star hover and checked effects */
+        .stars label.star:hover,
+        .stars label.star:hover ~ label.star,
+        .stars input[type="radio"]:checked ~ label.star {
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.4);
+        }
+        
+        .stars label.star:active {
+            transform: scale(0.9);
+        }
+
+        /* To show stars from left for the user */
+        .stars-wrapper {
+            direction: rtl; /* Stars will visually appear left-to-right */
+            display: inline-block; /* For proper alignment */
+        }
+        .stars-wrapper > input,
+        .stars-wrapper > label.star {
+            direction: ltr; /* Reset text direction for the actual star character */
+            display: inline-block;
+        }
+
+
+        .submit-btn {
+            background: var(--pvr-red);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4);
+        }
+
+        .submit-btn:hover {
+            background: #ff1e2b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(229, 9, 20, 0.6);
+        }
+
+        #feedback-message {
+            margin-top: 25px;
+            font-size: 1rem;
+            color: var(--gold);
+            min-height: 20px; /* Prevent layout shift */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px 25px;
+            }
+            .logo {
+                max-width: 200px;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            .rating-header h3 {
+                font-size: 1.2rem;
+            }
+            .stars label.star {
+                font-size: 30px;
+            }
+            .text-input {
+                width: calc(100% - 20px);
+                padding: 10px;
+            }
+            .submit-btn {
+                padding: 10px 25px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://i.ibb.co/L5wK56h/PVR-Nashe-Di-Cinema-GC.png" alt="PVR NasheDi Cinema GC Logo" class="logo">
+        
+        <h2>Share Your PVR Experience</h2>
+
+        <div class="input-group">
+            <label for="userName">Apna Naam Daalein</label>
+            <input type="text" id="userName" class="text-input" placeholder="Jaise: Aman Singh">
+        </div>
+
+        <div class="input-group">
+            <label for="movieName">Kaunsi Movie Dekhi?</label>
+            <input type="text" id="movieName" class="text-input" placeholder="Jaise: Jawan">
+        </div>
+
+        <div class="rating-section">
+            <div class="rating-header">
+                <h3>Rate Your Experience:</h3>
+                <button class="clear-btn" onclick="clearRatings()">Clear</button>
+            </div>
+
+            <div class="star-rating-group">
+                <label>Visuals:</label>
+                <div class="stars-wrapper">
+                    <div class="stars" data-category="visuals">
+                        <input type="radio" id="visuals5" name="visuals" value="5"><label for="visuals5" class="star">★</label>
+                        <input type="radio" id="visuals4" name="visuals" value="4"><label for="visuals4" class="star">★</label>
+                        <input type="radio" id="visuals3" name="visuals" value="3"><label for="visuals3" class="star">★</label>
+                        <input type="radio" id="visuals2" name="visuals" value="2"><label for="visuals2" class="star">★</label>
+                        <input type="radio" id="visuals1" name="visuals" value="1"><label for="visuals1" class="star">★</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="star-rating-group">
+                <label>Sound:</label>
+                <div class="stars-wrapper">
+                    <div class="stars" data-category="sound">
+                        <input type="radio" id="sound5" name="sound" value="5"><label for="sound5" class="star">★</label>
+                        <input type="radio" id="sound4" name="sound" value="4"><label for="sound4" class="star">★</label>
+                        <input type="radio" id="sound3" name="sound" value="3"><label for="sound3" class="star">★</label>
+                        <input type="radio" id="sound2" name="sound" value="2"><label for="sound2" class="star">★</label>
+                        <input type="radio" id="sound1" name="sound" value="1"><label for="sound1" class="star">★</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="star-rating-group">
+                <label>Comfort:</label>
+                <div class="stars-wrapper">
+                    <div class="stars" data-category="comfort">
+                        <input type="radio" id="comfort5" name="comfort" value="5"><label for="comfort5" class="star">★</label>
+                        <input type="radio" id="comfort4" name="comfort" value="4"><label for="comfort4" class="star">★</label>
+                        <input type="radio" id="comfort3" name="comfort" value="3"><label for="comfort3" class="star">★</label>
+                        <input type="radio" id="comfort2" name="comfort" value="2"><label for="comfort2" class="star">★</label>
+                        <input type="radio" id="comfort1" name="comfort" value="1"><label for="comfort1" class="star">★</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="star-rating-group">
+                <label>Story:</label>
+                <div class="stars-wrapper">
+                    <div class="stars" data-category="story">
+                        <input type="radio" id="story5" name="story" value="5"><label for="story5" class="star">★</label>
+                        <input type="radio" id="story4" name="story" value="4"><label for="story4" class="star">★</label>
+                        <input type="radio" id="story3" name="story" value="3"><label for="story3" class="star">★</label>
+                        <input type="radio" id="story2" name="story" value="2"><label for="story2" class="star">★</label>
+                        <input type="radio" id="story1" name="story" value="1"><label for="story1" class="star">★</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="star-rating-group">
+                <label>Overall:</label>
+                <div class="stars-wrapper">
+                    <div class="stars" data-category="overall">
+                        <input type="radio" id="overall5" name="overall" value="5"><label for="overall5" class="star">★</label>
+                        <input type="radio" id="overall4" name="overall" value="4"><label for="overall4" class="star">★</label>
+                        <input type="radio" id="overall3" name="overall" value="3"><label for="overall3" class="star">★</label>
+                        <input type="radio" id="overall2" name="overall" value="2"><label for="overall2" class="star">★</label>
+                        <input type="radio" id="overall1" name="overall" value="1"><label for="overall1" class="star">★</label>
+                    </div>
+                </div>
+            </div>
+
+        </div> <button class="submit-btn" onclick="submitReview()">Submit Review</button>
+
+        <div id="feedback-message"></div>
+
+    </div> <script>
+        const userNameInput = document.getElementById('userName');
+        const movieNameInput = document.getElementById('movieName');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const categories = ['visuals', 'sound', 'comfort', 'story', 'overall'];
+
+        // Function to load saved data from LocalStorage
+        window.onload = () => {
+            const savedReview = JSON.parse(localStorage.getItem('pvrReview'));
+            if (savedReview) {
+                userNameInput.value = savedReview.userName || '';
+                movieNameInput.value = savedReview.movieName || '';
+
+                categories.forEach(category => {
+                    if (savedReview.ratings && savedReview.ratings[category]) {
+                        const rating = savedReview.ratings[category];
+                        const radio = document.querySelector(`input[name="${category}"][value="${rating}"]`);
+                        if (radio) {
+                            radio.checked = true;
+                        }
+                    }
+                });
+                updateFeedbackMessage(savedReview.userName);
+            }
+        };
+
+        function submitReview() {
+            const userName = userNameInput.value.trim();
+            const movieName = movieNameInput.value.trim();
+            const ratings = {};
+            let allRatingsGiven = true;
+
+            if (!userName || !movieName) {
+                feedbackMessage.textContent = "Please enter your Name and Movie Name.";
+                feedbackMessage.style.color = var(--pvr-red);
+                return;
+            }
+
+            categories.forEach(category => {
+                const selectedRating = document.querySelector(`input[name="${category}"]:checked`);
+                if (selectedRating) {
+                    ratings[category] = selectedRating.value;
+                } else {
+                    allRatingsGiven = false;
+                }
+            });
+
+            if (!allRatingsGiven) {
+                feedbackMessage.textContent = "Please give a rating for all categories.";
+                feedbackMessage.style.color = var(--pvr-red);
+                return;
+            }
+
+            const reviewData = {
+                userName: userName,
+                movieName: movieName,
+                ratings: ratings,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('pvrReview', JSON.stringify(reviewData));
+            updateFeedbackMessage(userName);
+        }
+
+        function clearRatings() {
+            userNameInput.value = '';
+            movieNameInput.value = '';
+            categories.forEach(category => {
+                document.querySelectorAll(`input[name="${category}"]`).forEach(radio => radio.checked = false);
+            });
+            localStorage.removeItem('pvrReview');
+            feedbackMessage.textContent = '';
+        }
+
+        function updateFeedbackMessage(name) {
+            feedbackMessage.textContent = `Thank you for your feedback, ${name || 'User'}!`;
+            feedbackMessage.style.color = var(--gold);
+        }
+
+    </script>
+</body>
+</html>
